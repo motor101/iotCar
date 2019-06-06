@@ -11,8 +11,8 @@ const int leftEnablePin = D0;
 const int leftForwardPin = D1;
 const int leftBackwardPin = D2;
 
-const int rightEnablePin = D3;
-const int rightForwardPin = D4;
+const int rightEnablePin = D4;
+const int rightForwardPin = D3;
 const int rightBackwardPin = D5;
 
 const int FORWARDS = 1;
@@ -90,6 +90,20 @@ void move(int rightDirection, int rightSpeed, int leftDirection, int leftSpeed){
   analogWrite(leftForwardPin, leftForwardPinSpeed);
   analogWrite(leftBackwardPin, leftBackwardPinSpeed);
   digitalWrite(leftEnablePin, HIGH);
+
+  Serial.print(" rightForward = ");
+  Serial.print(rightForwardPinSpeed);
+  
+  Serial.print(" rightBackward = ");
+  Serial.println(rightBackwardPinSpeed);
+  
+  Serial.print(" leftForward = ");
+  Serial.print(leftForwardPinSpeed);
+  
+  Serial.print(" leftBackward = ");
+  Serial.println(leftBackwardPinSpeed);
+  
+  
 }
 
 // if no request, return 0
@@ -161,6 +175,10 @@ void calculateSpeedAndDirection(){
   } else{  
     rightDirection = STOP;
     leftDirection = STOP;
+  }
+
+  if(speed < 0){
+    speed = -speed;
   }
 
   rightSpeed = speed*1023/100;
