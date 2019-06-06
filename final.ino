@@ -57,15 +57,16 @@ void move(int rightDirection, int rightSpeed, int leftDirection, int leftSpeed){
 
   int rightForwardPinSpeed = 0;
   int rightBackwardPinSpeed = 0;
+  
   int leftForwardPinSpeed = 0;
   int leftBackwardPinSpeed = 0;
   
   if(rightDirection == FORWARDS){
-    rightForwardPinSpeed = rightSpeed;
+    rightForwardPinSpeed = 1023;
     rightBackwardPinSpeed = 0;
   }else if (rightDirection == BACKWARDS){
     rightForwardPinSpeed = 0;
-    rightBackwardPinSpeed = rightSpeed;
+    rightBackwardPinSpeed = 1023;
   } else {
     rightForwardPinSpeed = 0;
     rightBackwardPinSpeed = 0;  
@@ -73,11 +74,11 @@ void move(int rightDirection, int rightSpeed, int leftDirection, int leftSpeed){
 
   
   if(leftDirection == FORWARDS){
-    leftForwardPinSpeed = leftSpeed;
+    leftForwardPinSpeed = 1023;
     leftBackwardPinSpeed = 0;
   }else if (leftDirection == BACKWARDS){
     leftForwardPinSpeed = 0;
-    leftBackwardPinSpeed = leftSpeed;
+    leftBackwardPinSpeed = 1023;
   } else {
     leftForwardPinSpeed = 0;
     leftBackwardPinSpeed = 0;  
@@ -85,11 +86,11 @@ void move(int rightDirection, int rightSpeed, int leftDirection, int leftSpeed){
 
   analogWrite(rightForwardPin, rightForwardPinSpeed);
   analogWrite(rightBackwardPin, rightBackwardPinSpeed);
-  digitalWrite(rightEnablePin, HIGH);
+  analogWrite(rightEnablePin, rightSpeed);
   
   analogWrite(leftForwardPin, leftForwardPinSpeed);
   analogWrite(leftBackwardPin, leftBackwardPinSpeed);
-  digitalWrite(leftEnablePin, HIGH);
+  analogWrite(leftEnablePin, leftSpeed);
 
   Serial.print(" rightForward = ");
   Serial.print(rightForwardPinSpeed);
