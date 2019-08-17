@@ -20,6 +20,8 @@ const int FORWARDS = 1;
 const int STOP = 0;
 const int BACKWARDS = -1;
 
+const String httpFileNotFound = "HTTP/1.1 404 Not Found\r\n\r\n";
+const String httpOK = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n";
 
 int speed = 0;
 int direction = 0;
@@ -110,12 +112,31 @@ void move(int rightDirection, int rightSpeed, int leftDirection, int leftSpeed) 
 
 }
 
+void getFile(const char* fileName, WiFiClient& client) {
+  Serial.print("getFile() called with");
+  Serial.println(fileName);
+
+  File file = SPIFFS.open(fileName, "r");
+  if (!file) {
+    Serial.println("File not open");
+    client.print(httpFileNotFound);
+  } else {
+    Serial.println("file is OK");
+    client.print(httpOK);
+
+    int symbol;
+    while ((symbol = file.read()) != -1) {
+//      Serial.print((char)symbol);
+      client.print((char)symbol);
+    }
+    client.println();
+    file.close();
+  }
+}
+
 // if no request, return 0
 // else, return 1
 int getSpeedAndDirection() {
-  const String httpFileNotFound = "HTTP/1.1 404 Not Found\r\n\r\n";
-  const String httpOK = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n";
-  
   // Check if a client has connected
   WiFiClient client = server.available();
   if (!client) {
@@ -132,26 +153,20 @@ int getSpeedAndDirection() {
   Serial.println(request);
 
   String answer ;
+  Serial.println("request is:");
+  Serial.println(request);
 
+  Serial.println("parsing request");
   if (request.startsWith("GET / ")) {
-    File file = SPIFFS.open("/index.html", "r");
-    if (!file) {
-      Serial.println("File not open");
-      client.print(httpFileNotFound);
-      
-    } else {
-      Serial.println("file is OK");
-      client.print(httpOK);
-      
-      int symbol;
-      while ((symbol = file.read()) != -1) {
-        Serial.print((char)symbol);
-        client.print((char)symbol);
-      }
-      client.println();
-      file.close();
-    }
-  } else {
+    getFile("/index.html", client);
+  } else if (request.startsWith("GET /script.js")) {
+    getFile("/script.js", client);
+  } else if (request.startsWith("GET /styles.css")) {
+    getFile("/styles.css", client);
+  } else if (request.startsWith("GET /index.html")) {
+    getFile("/index.html", client);
+  }  else {
+    Serial.println("request not an existing file");
     int speedBeginIndex = request.indexOf(speedString) + speedStringLength;
     int speedEndIndex = request.indexOf("/", speedBeginIndex);
 

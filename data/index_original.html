@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Race Car</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+    <ul>
+        <li><button id="drive">Drive</button></li>
+        <li><button id="instructions">Instructions</button></li>
+        <li><button id="customize">Customize</button></li>
+    </ul>
+
+    <p>speed: <span>0</span></p>
+    <p>Pick inner circle color: <input type="color" id='colorInnerCircle' oninput="changeInnerCircleColor()" /></p>
+    <p>Pick outer circle color: <input type="color" id='colorOuterCircle' oninput="changeOuterCircleColor()" /></p>
+    <h1 style="text-align: center">Drag the inner circle around:</h1>
+    <p id="speedOutput">sdf</p>
+    <p id="directionOutput">sdf</p>
+
+    <svg id="svg">
+        <circle id="outerCircle" cx="50%" cy="50%" r="30%" />
+        <line x1="0%" y1="50%" x2="100%" y2="50%" />
+        <line x1="50%" y1="0%" x2="50%" y2="100%" />
+        <circle id="innerCircle" cx=" 50%" cy="50%" r="10%" />
+    </svg>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

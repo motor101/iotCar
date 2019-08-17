@@ -1,0 +1,48 @@
+body {
+  background-color: skyblue;
+}
+
+ul {
+  list-style-type: none;
+  margin: auto;
+  padding: 0;
+  overflow: hidden;
+  width: max-content;
+}
+
+li {
+  float: left;
+}
+
+button {
+  /* color: white; */
+  text-align: center;
+  padding: 14px 16px;
+  font-size: 100%;
+  font-weight: bold;
+  background-color: cadetblue;
+}
+
+p {
+  text-align: right;
+}
+
+#svg {
+  position: absolute;
+  left: 10%;
+  height: 60%;
+  width: 80%;
+  border: 1px solid black;
+}
+
+#outerCircle {
+  fill: red;
+}
+#innerCircle {
+  fill: yellow;
+}
+
+line {
+  stroke: black;
+  stroke-width: 4px;
+}
