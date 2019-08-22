@@ -18,17 +18,49 @@ function pointsDistance(x1, y1, x2, y2) {
 
 function customize() {
   mode = CUSTOMIZE_MODE;
+  interfaceCustomize.style.display = "block";
+  interfaceDrive.style.display = "none";
+  interfaceInstructions.style.display = "none";
+  calculateDimensions();
 }
 
 function drive() {
   mode = DRIVE_MODE;
+  interfaceCustomize.style.display = "none";
+  interfaceDrive.style.display = "block";
+  interfaceInstructions.style.display = "none";
+  calculateDimensions();
 }
 
 function showInstructions() {
   mode = INSTRUCTIONS_MODE;
+  interfaceCustomize.style.display = "none";
+  interfaceDrive.style.display = "none";
+  interfaceInstructions.style.display = "block";
+  calculateDimensions();
 }
 
-window.onload = drive;
+function onLoadPage() {
+  drive();
+  calculateDimensions();
+}
+
+function calculateDimensions() {
+  rect = svg.getBoundingClientRect();
+  svgX = rect.left;
+  svgY = rect.top;
+
+  rectOuterCircle = outerCircle.getBoundingClientRect();
+  rectInnerCircle = innerCircle.getBoundingClientRect();
+
+  circleCenterX = (rectInnerCircle.left + rectInnerCircle.right) / 2;
+  circleCenterY = (rectInnerCircle.top + rectInnerCircle.bottom) / 2;
+
+  outerCircleRadius = circleCenterX - rectOuterCircle.left;
+}
+
+window.onload = onLoadPage;
+window.onorientationchange = calculateDimensions;
 
 var mode;
 const DRIVE_MODE = 0;
@@ -36,31 +68,34 @@ const CUSTOMIZE_MODE = 1;
 const INSTRUCTIONS_MODE = 2;
 
 var driveButton = document.getElementById("drive");
+var interfaceDrive = document.getElementById("interfaceDrive");
 driveButton.onclick = drive;
 
 var instructionsButton = document.getElementById("instructions");
+var interfaceInstructions = document.getElementById("interfaceInstructions");
 instructionsButton.onclick = showInstructions;
 
 var customizeButton = document.getElementById("customize");
+var interfaceCustomize = document.getElementById("interfaceCustomize");
 customizeButton.onclick = customize;
 
 var svg = document.getElementById("svg");
-var rect = svg.getBoundingClientRect();
-var svgX = rect.left;
-var svgY = rect.top;
+var rect;
+var svgX;
+var svgY;
 
 var outerCircle = document.getElementById("outerCircle");
-var outerCircleColor = document.getElementById("colorOuterCircle");
-var rectOuterCircle = outerCircle.getBoundingClientRect();
+var outerCircleColor = document.getElementById("outerCircleColor");
+var rectOuterCircle;
 
 var innerCircle = document.getElementById("innerCircle");
-var innerCircleColor = document.getElementById("colorInnerCircle");
-var rectInnerCircle = innerCircle.getBoundingClientRect();
+var innerCircleColor = document.getElementById("innerCircleColor");
+var rectInnerCircle;
 
-var circleCenterX = (rectInnerCircle.left + rectInnerCircle.right) / 2;
-var circleCenterY = (rectInnerCircle.top + rectInnerCircle.bottom) / 2;
+var circleCenterX;
+var circleCenterY;
 
-var outerCircleRadius = circleCenterX - rectOuterCircle.left;
+var outerCircleRadius;
 
 dragElement(document.getElementById("innerCircle"));
 
