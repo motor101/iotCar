@@ -4,8 +4,8 @@ function httpGet(theUrl) {
   xmlHttp.send(null);
 }
 function udpateCar(speed, direction) {
-  document.getElementById("speedOutput").innerText = speed;
-  document.getElementById("directionOutput").innerText = direction;
+  document.getElementById("speedOutput").innerText = Math.abs(speed);
+  // document.getElementById("directionOutput").innerText = direction;
   httpGet(window.location + "speed=" + speed + "/direction=" + direction + "/");
 }
 function stopCar() {
@@ -37,6 +37,7 @@ function showInstructions() {
   interfaceCustomize.style.display = "none";
   interfaceDrive.style.display = "none";
   interfaceInstructions.style.display = "block";
+  movementInfo.innerHTML = "stopped";
   calculateDimensions();
 }
 
@@ -97,6 +98,8 @@ var circleCenterY;
 
 var outerCircleRadius;
 
+var movementInfo = document.getElementById("movementInfo");
+
 dragElement(document.getElementById("innerCircle"));
 
 function dragElement(element) {
@@ -119,6 +122,7 @@ function dragElement(element) {
     var posX;
     var posY;
 
+    // determine exact pointer location
     if (e.touches === undefined) {
       var posX = e.clientX;
       var posY = e.clientY;
@@ -127,6 +131,7 @@ function dragElement(element) {
       var posY = e.touches[0].clientY;
     }
 
+    // get pointer distance from joy stick center
     var distanceFromCenter = pointsDistance(
       posX,
       posY,
@@ -134,42 +139,62 @@ function dragElement(element) {
       circleCenterY
     );
 
+    // determine speed in [-100, 100]
     var speed = Math.round((distanceFromCenter / outerCircleRadius) * 100);
     if (posY > circleCenterY) {
       speed = -speed;
     }
+
+    // determine direction in [-100, 100]
     var direction = Math.round(
       ((Math.acos((posX - circleCenterX) / distanceFromCenter) - Math.PI / 2) *
         200) /
         Math.PI
     );
     direction = -direction;
-    // if (posX > circleCenterX) {
-    //   direction = -direction;
-    // }
 
+    // if we are inside the outer circle, change location ot the inner circle
     if (distanceFromCenter < outerCircleRadius) {
-      // set the element's new position:
       element.setAttribute("cx", posX - svgX);
       element.setAttribute("cy", posY - svgY);
 
       if (mode == DRIVE_MODE) {
         udpateCar(speed, direction);
+      } else if (mode == INSTRUCTIONS_MODE) {
+        if (speed == 0) {
+          movementInfo.innerHTML = "stopped";
+        } else {
+          if (speed > 0) {
+            movementInfo.innerHTML = "moving forward";
+          } else {
+            movementInfo.innerHTML = "moving backward";
+          }
+
+          if (direction > 10) {
+            movementInfo.innerHTML += " right";
+          } else if (direction < -10) {
+            movementInfo.innerHTML += " left";
+          }
+        }
       }
     }
   }
 
   function closeDragElement() {
-    /* stop moving when mouse button is released:*/
+    // stop moving when mouse button is released:
     // element.setAttribute("cx", "50%");
     // element.setAttribute("cy", "50%");
+
     element.setAttribute("cx", circleCenterX - svgX);
     element.setAttribute("cy", circleCenterY - svgY);
+
     document.onmouseup = null;
     document.onmousemove = null;
 
     if (mode == DRIVE_MODE) {
       stopCar();
+    } else if (mode == INSTRUCTIONS_MODE) {
+      movementInfo.innerHTML = "stopped";
     }
   }
 }

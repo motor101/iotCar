@@ -16,22 +16,20 @@
         <li><button id="customize">Customize</button></li>
     </ul>
 
-    <p>speed: <span>0</span></p>
     <div id="interfaceCustomize">
         <p>Pick inner circle color: <input type="color" id='innerCircleColor' oninput="changeInnerCircleColor()" /></p>
         <p>Pick outer circle color: <input type="color" id='outerCircleColor' oninput="changeOuterCircleColor()" /></p>
     </div>
     <div id="interfaceInstructions">
-        <h1 style="text-align: center">Drag the inner circle around:</h1>
-        <p id="speedOutput">sdf</p>
-        <p id="directionOutput">sdf</p>
+        <h1 style="text-align: center">Drag the inner circle around to get state:</h1>
+        <h1 id="movementInfo"></h1>
     </div>
     <div id="interfaceDrive">
-        <p>driving</p>
+        <h1>speed: <span id="speedOutput">0</span> / 100</h1>
     </div>
 
     <svg id="svg">
-        <circle id="outerCircle" cx="50%" cy="50%" r="40%" />
+        <circle id="outerCircle" cx="50%" cy="50%" r="37%" />
         <line x1="0%" y1="50%" x2="100%" y2="50%" />
         <line x1="50%" y1="0%" x2="50%" y2="100%" />
         <circle id="innerCircle" cx=" 50%" cy="50%" r="5%" />
