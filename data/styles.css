@@ -28,7 +28,11 @@ h1 {
 }
 
 #interfaceCustomize {
+  display: none;
   text-align: right;
+}
+#interfaceInstructions {
+  display: none;
 }
 
 #svg {
