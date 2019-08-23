@@ -150,13 +150,10 @@ int getSpeedAndDirection() {
 
   String request = client.readStringUntil('\r');
 
-  Serial.println(request);
-
   String answer ;
   Serial.println("request is:");
   Serial.println(request);
 
-  Serial.println("parsing request");
   if (request.startsWith("GET / ")) {
     getFile("/index.html", client);
   } else if (request.startsWith("GET /script.js")) {

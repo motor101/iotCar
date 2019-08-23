@@ -1,6 +1,6 @@
 function httpGet(theUrl) {
   var xmlHttp = new XMLHttpRequest();
-  xmlHttp.open("GET", theUrl, true);
+  xmlHttp.open("GET", theUrl, false);
   xmlHttp.send(null);
 }
 function udpateCar(speed, direction) {
@@ -37,7 +37,7 @@ function showInstructions() {
   interfaceCustomize.style.display = "none";
   interfaceDrive.style.display = "none";
   interfaceInstructions.style.display = "block";
-  movementInfo.innerHTML = "stopped";
+  movementInfo.innerHTML = "няма движение";
   calculateDimensions();
 }
 
@@ -162,18 +162,18 @@ function dragElement(element) {
         udpateCar(speed, direction);
       } else if (mode == INSTRUCTIONS_MODE) {
         if (speed == 0) {
-          movementInfo.innerHTML = "stopped";
+          movementInfo.innerHTML = "няма движение";
         } else {
           if (speed > 0) {
-            movementInfo.innerHTML = "moving forward";
+            movementInfo.innerHTML = "движение напред";
           } else {
-            movementInfo.innerHTML = "moving backward";
+            movementInfo.innerHTML = "движение назад";
           }
 
-          if (direction > 10) {
-            movementInfo.innerHTML += " right";
+          if (direction > 20) {
+            movementInfo.innerHTML += " и надясно";
           } else if (direction < -10) {
-            movementInfo.innerHTML += " left";
+            movementInfo.innerHTML += " и наляво";
           }
         }
       }
@@ -194,7 +194,7 @@ function dragElement(element) {
     if (mode == DRIVE_MODE) {
       stopCar();
     } else if (mode == INSTRUCTIONS_MODE) {
-      movementInfo.innerHTML = "stopped";
+      movementInfo.innerHTML = "няма движение";
     }
   }
 }

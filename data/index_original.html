@@ -11,21 +11,23 @@
 
 <body onscroll="calculateDimensions()">
     <ul>
-        <li><button id="drive">Drive</button></li>
-        <li><button id="instructions">Instructions</button></li>
-        <li><button id="customize">Customize</button></li>
+        <li><button id="drive">Каране</button></li>
+        <li><button id="instructions">Инструкции</button></li>
+        <li><button id="customize">Настройки</button></li>
     </ul>
 
     <div id="interfaceCustomize">
-        <p>Pick inner circle color: <input type="color" id='innerCircleColor' oninput="changeInnerCircleColor()" /></p>
-        <p>Pick outer circle color: <input type="color" id='outerCircleColor' oninput="changeOuterCircleColor()" /></p>
+        <h3>Изберете цвят на малкия кръг: <input type="color" id='innerCircleColor'
+                oninput="changeInnerCircleColor()" /></h3>
+        <h3>Изберете цвят на големия кръг: <input type="color" id='outerCircleColor'
+                oninput="changeOuterCircleColor()" /></h3>
     </div>
     <div id="interfaceInstructions">
-        <h1 style="text-align: center">Drag the inner circle around to get state:</h1>
+        <h1 style="text-align: center">Започнете да местите малкия кръг:</h1>
         <h1 id="movementInfo"></h1>
     </div>
     <div id="interfaceDrive">
-        <h1>speed: <span id="speedOutput">0</span> / 100</h1>
+        <h1>скорост: <span id="speedOutput">0</span> / 100</h1>
     </div>
 
     <svg id="svg">

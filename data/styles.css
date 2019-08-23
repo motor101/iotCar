@@ -23,7 +23,11 @@ button {
   background-color: cadetblue;
 }
 
-p {
+h1 {
+  text-align: center;
+}
+
+#interfaceCustomize {
   text-align: right;
 }
 
